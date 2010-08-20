@@ -38,7 +38,7 @@ my $ttmw = sub {
 		if ( $type =~ m!\Atext/html *(?:;|\z)! ) {
 			my ( $tmpl, $out );
 			Plack::Util::foreach( $res->[2], sub { $tmpl .= shift } );
-			$tt->process( \$tmpl, {}, \$out ) or do {
+			$tt->process( \Encode::decode( 'UTF-8', $tmpl ), {}, \$out ) or do {
 				Plack::Util::header_set( $res->[1], 'Content-Type', 'text/plain' );
 				$out = $tt->error;
 			};
